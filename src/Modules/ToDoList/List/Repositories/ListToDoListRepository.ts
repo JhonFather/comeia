@@ -36,10 +36,10 @@ class ListToDoListRepository implements IToDoList {
                 'todolist.performed',
             )
             .from('todolist')
-            .where(builder =>
+            .where('user_id', id)
+            .andWhere(builder =>
                 builder
-                    .where('user_id', id)
-                    .andWhere(conbuilder => {
+                    .where(conbuilder => {
                         if (description) {
                             conbuilder.where(
                                 'description',
@@ -48,14 +48,12 @@ class ListToDoListRepository implements IToDoList {
                             );
                         }
                     })
-                    .andWhere(conbuilder => {
+                    .where(conbuilder => {
                         if (performed) {
                             conbuilder.where('performed', performed);
                         }
                     }),
             )
-            .where('user_id', id)
-            .orWhere('description', 'like', `%${description}%`)
             .limit(limit)
             .offset(offset);
 

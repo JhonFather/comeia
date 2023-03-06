@@ -155,7 +155,8 @@
                     "400": {
                         "description": "Ocorreu um erro ao tentar trazer suas tarefas, tente novamente"
                     }
-                }
+                },
+                "security": [{ "bearerAuth": [] }]
             },
             "post": {
                 "tags": ["To Do List"],
@@ -188,7 +189,8 @@
                     "400": {
                         "description": "Ocorreu um erro ao tentar cadastrar, verifique as informações!"
                     }
-                }
+                },
+                "security": [{ "bearerAuth": [] }]
             },
             "put": {
                 "tags": ["To Do List"],
@@ -225,7 +227,8 @@
                     "400": {
                         "description": "Ocorreu um erro ao tentar atualizar a tarefa, tente novamente"
                     }
-                }
+                },
+                "security": [{ "bearerAuth": [] }]
             },
             "delete": {
                 "tags": ["To Do List"],
@@ -245,7 +248,8 @@
                     "400": {
                         "description": "Ocorreu um erro ao tentar atualizar a tarefa, tente novamente"
                     }
-                }
+                },
+                "security": [{ "bearerAuth": [] }]
             }
         }
     },
@@ -258,7 +262,5 @@
                 "in": "header"
             }
         }
-    },
-
-    "security": [{ "bearerAuth": [] }]
+    }
 }
