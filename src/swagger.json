@@ -1,0 +1,264 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Documentação Desafio Tecnico Comeia",
+        "version": "1.0.0"
+    },
+    "swaggerOptions": {
+        "docExpansions": "none",
+        "persistAuthorization": true
+    },
+    "securityDefinitions": {
+        "bearerAuth": {
+            "type": "apiKey",
+            "name": "x-auth-token",
+            "scheme": "bearer",
+            "in": "header"
+        }
+    },
+    "paths": {
+        "/user": {
+            "post": {
+                "tags": ["Usuário"],
+                "description": "Criar um novo usuário",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "email": {
+                                        "type": "string"
+                                    },
+                                    "password": {
+                                        "type": "string"
+                                    }
+                                },
+                                "example": {
+                                    "email": "newuser@email.com",
+                                    "password": "123"
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Created"
+                    },
+                    "400": {
+                        "description": "E-mail invalido"
+                    },
+                    "409": {
+                        "description": "Usuário já existe"
+                    }
+                }
+            }
+        },
+        "/login": {
+            "post": {
+                "tags": ["Usuário"],
+                "description": "Efetuar o login",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "email": {
+                                        "type": "string"
+                                    },
+                                    "password": {
+                                        "type": "string"
+                                    }
+                                },
+                                "example": {
+                                    "email": "comeia@gmail.com",
+                                    "password": "comeia"
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "ok"
+                    },
+                    "400": {
+                        "description": "E-mail ou senha inválidos"
+                    }
+                }
+            }
+        },
+        "/refresh-token": {
+            "post": {
+                "tags": ["Usuário"],
+                "description": "Efetuar o refresh token o id do refresh token",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "refresh_token": {
+                                        "type": "string"
+                                    }
+                                },
+                                "example": {
+                                    "refresh_token": ""
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "ok"
+                    },
+                    "400": {
+                        "description": "Refresh token invalido!"
+                    }
+                }
+            }
+        },
+
+        "/todo": {
+            "get": {
+                "tags": ["To Do List"],
+                "description": "Listar as tarefas cadastradas",
+                "parameters": [
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "type": "string"
+                    },
+                    {
+                        "name": "offset",
+                        "in": "query",
+                        "type": "string"
+                    },
+                    {
+                        "name": "description",
+                        "in": "query",
+                        "type": "string"
+                    },
+                    {
+                        "name": "performed",
+                        "in": "query",
+                        "type": "boolean"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "ok"
+                    },
+                    "400": {
+                        "description": "Ocorreu um erro ao tentar trazer suas tarefas, tente novamente"
+                    }
+                }
+            },
+            "post": {
+                "tags": ["To Do List"],
+                "description": "Criar uma nova tarefa",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "description": {
+                                        "type": "string"
+                                    },
+                                    "performed": {
+                                        "type": "boolean"
+                                    }
+                                },
+                                "example": {
+                                    "description": "uma nova tarefa",
+                                    "performed": false
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Created"
+                    },
+                    "400": {
+                        "description": "Ocorreu um erro ao tentar cadastrar, verifique as informações!"
+                    }
+                }
+            },
+            "put": {
+                "tags": ["To Do List"],
+                "description": "Atualizar uma tarefa",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "id": {
+                                        "type": "string"
+                                    },
+                                    "description": {
+                                        "type": "string"
+                                    },
+                                    "performed": {
+                                        "type": "boolean"
+                                    }
+                                },
+                                "example": {
+                                    "id": "325ccf57-ff5e-4511-b9f3-ca28d0b9fab8",
+                                    "description": "contratar João Vinícius",
+                                    "performed": true
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Tarefa atualizada com sucesso!"
+                    },
+                    "400": {
+                        "description": "Ocorreu um erro ao tentar atualizar a tarefa, tente novamente"
+                    }
+                }
+            },
+            "delete": {
+                "tags": ["To Do List"],
+                "description": "Deletar uma tarefa",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "query",
+                        "type": "string",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Tarefa atualizada com sucesso!"
+                    },
+                    "400": {
+                        "description": "Ocorreu um erro ao tentar atualizar a tarefa, tente novamente"
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "securitySchemes": {
+            "bearerAuth": {
+                "type": "http",
+                "name": "x-auth-token",
+                "scheme": "bearer",
+                "in": "header"
+            }
+        }
+    },
+
+    "security": [{ "bearerAuth": [] }]
+}
